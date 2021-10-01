@@ -9,16 +9,13 @@ class game {
     private:
         int ans;
         int last;
+        int attempts = 0;
         
     public:
-        void set_ans(int _ans) {
-            ans = _ans;
-        }
-
         void start() {
+            system("cls");
             ans = abs(rand() % 100); // Congruence Magic to get last 2 digits;
-			int attempts = 0;
-            guess(attempts);
+            guess();
 
             string response;
 
@@ -31,10 +28,8 @@ class game {
             }
         }
         
-        int guess(int &attempts) {
+        int guess() {
             int user_ans;
-
-			
 			
             cout << "My number is ";
             cin >> user_ans;
@@ -43,17 +38,15 @@ class game {
                 cout << "Correct!\n";
 				cout << "Attempts: " << attempts << endl;
                 return 0;
-            } else {
-				attempts++;
-			}
-
+            }
             last = user_ans;
 
             string say = (ans > user_ans) ? "higher":"lower";
 
             cout << "Wrong! (Hint: It's " << say << " than " << last << ")\n";
 
-            guess(attempts);
+            attempts++;
+            guess();
         }
 };
 
