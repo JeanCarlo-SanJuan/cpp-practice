@@ -1,21 +1,17 @@
-#include <iostream>
 #include <stdlib.h>
 #include <time.h>
-
+#include <iostream>
 using namespace std;
-
 class game {
     private:
         int ans;
         int last;
-        
-    public:
-        void set_ans(int _ans) {
-            ans = _ans;
-        }
+        int attempts;
 
+    public:
         void start() {
             ans = abs(rand() % 100); // Congruence Magic to get last 2 digits;
+            cout << ans;
             guess();
 
             char response;
@@ -36,6 +32,7 @@ class game {
 
             if (ans == user_ans) {
                 cout << "Correct!\n";
+                cout << "Attempts: " << attempts << endl;
                 return 0;
             }
 
@@ -45,6 +42,7 @@ class game {
 
             cout << "Wrong! (Hint: It's " << say << " than " << last << ")\n";
 
+            attempts++;
             guess();
         }
 };
