@@ -30,10 +30,12 @@ class game {
 
 int main() {
     int res;
-    system("title High-Low Game by JSCJ (C++)");
     srand(time(0));
     game Game(abs(rand() % 100)); // Congruence Magic to get last 2 digits;
     
+    system("title High-Low Game by JSCJ (C++)");
+    printf("Note: The number is in the inclusive range of 0 to 99.\n");
+
     while (true) {
         res = Game.guess();
         if (res == -1) {
