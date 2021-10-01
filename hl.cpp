@@ -1,40 +1,51 @@
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
+
 using namespace std;
+
+
 class game {
     private:
         int ans;
         int last;
-        int attempts;
-
+        
     public:
+        void set_ans(int _ans) {
+            ans = _ans;
+        }
+
         void start() {
             ans = abs(rand() % 100); // Congruence Magic to get last 2 digits;
-            cout << ans;
-            guess();
+			int attempts = 0;
+            guess(attempts);
 
-            char response;
+            string response;
 
             cout << "Play again? [Y|N]";
-            cin >> response;
+			cin.ignore();
+            getline(cin,response);
 
-            if ( response == 'y' or response == 'Y') {
+            if (response == "y" or response == "Y") {
                 start();
             }
         }
         
-        int guess() {
+        int guess(int &attempts) {
             int user_ans;
 
+			
+			
             cout << "My number is ";
             cin >> user_ans;
 
             if (ans == user_ans) {
                 cout << "Correct!\n";
-                cout << "Attempts: " << attempts << endl;
+				cout << "Attempts: " << attempts << endl;
                 return 0;
-            }
+            } else {
+				attempts++;
+			}
 
             last = user_ans;
 
@@ -42,8 +53,7 @@ class game {
 
             cout << "Wrong! (Hint: It's " << say << " than " << last << ")\n";
 
-            attempts++;
-            guess();
+            guess(attempts);
         }
 };
 
