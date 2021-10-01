@@ -5,47 +5,58 @@
 using namespace std;
 
 class game {
-    public:
+    private:
         int ans;
         int last;
-
-        game(int _ans) {
+        
+    public:
+        void set_ans(int _ans) {
             ans = _ans;
         }
 
+        void start() {
+            ans = abs(rand() % 100); // Congruence Magic to get last 2 digits;
+            guess();
+
+            char response;
+
+            cout << "Play again? [Y|N]";
+            cin >> response;
+
+            if ( response == 'y' or response == 'Y') {
+                start();
+            }
+        }
+        
         int guess() {
             int user_ans;
+
             cout << "My number is ";
             cin >> user_ans;
 
             if (ans == user_ans) {
-                return -1;
+                cout << "Correct!\n";
+                return 0;
             }
 
             last = user_ans;
-            return ans > user_ans;
-    }
+
+            string say = (ans > user_ans) ? "higher":"lower";
+
+            cout << "Wrong! (Hint: It's " << say << " than " << last << ")\n";
+
+            guess();
+        }
 };
 
 int main() {
-    int res;
     srand(time(0));
-    game Game(abs(rand() % 100)); // Congruence Magic to get last 2 digits;
     
     system("title High-Low Game by JSCJ (C++)");
-    printf("Note: The number is in the inclusive range of 0 to 99.\n");
+    cout << "Note: The number is in the inclusive range of 0 to 99.\n";
 
-    while (true) {
-        res = Game.guess();
-        if (res == -1) {
-            cout << "Correct!\n";
-            break;
-        }
+    game Game; 
+    Game.start();
 
-        cout << ((res > 0) ? "Higher!":"Lower!");
-        cout << "\n";
-
-    }
-    system("\npause");
     return 0;
 }
