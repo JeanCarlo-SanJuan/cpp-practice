@@ -55,13 +55,12 @@ int menu_items = 3;
 bool reset_state = false;
 
 void show_option(int i, string text) {
-    cout << "(" << i << ") " << text << endl;
+    cout << " (" << i << ") " << text << endl;
 }
 
 int main() {
     system("title Vending Machine V1 by Jean Carlo San Juan");
     show_menu(0);
-
     return 0;
 }
 
@@ -86,6 +85,7 @@ void show_menu(int state) {
             for(auto kv:menu) {
                 i++;
 
+                //Enumerate the items in the subcategory
                 if (state == i) {
                     cout << kv.first + ":" << endl;
 
@@ -117,6 +117,7 @@ void prompt(int state) {
 
     switch (state) {
         case 0:
+            // Quit the program
             if (action == 3) {
                 return;
             }
@@ -126,7 +127,8 @@ void prompt(int state) {
 
             break;
         case 1: case 2:
-            if (action == 4) {
+            // Categories must have the same number of items otherwise refactor this.
+            if (action == menu_items + 1) {
                 show_menu(0);
             } 
             else if (action > 0 && action < menu_items + 1) {
@@ -155,7 +157,8 @@ void handle_payment(int category, int item_id) {
         i++;
 
         if (category == i) {
-
+            
+            // Finds the product and item
             for(auto item: kv.second) {
                 j++;
                 if (j == item_id) {
@@ -171,14 +174,16 @@ void handle_payment(int category, int item_id) {
 
     }
 
-
     if (price > 0) {
+
+        // Make user pay at arbitrary denominations until desired price
         while (paid < price) {
-            cout << "You have selected: " << product << endl;
-            cout << "Please pay the amount: " << price << endl;
-            cout << "Balance left: " << price - paid << "\nInsert amount: ";
+            cout << " You have selected: " << product << endl;
+            cout << " Please pay the amount: " << price << endl;
+            cout << " Balance left: " << price - paid << "\nInsert amount: ";
             cin >> current;
-        
+
+            // Checks if the user enters a valid denomination
             for (int denom: denominations) {
                 if (denom == current) {
                     paid += current;
@@ -198,10 +203,9 @@ void handle_payment(int category, int item_id) {
             valid = false;
         }
 
-        cout << "You bought " + product + ".";
-        cout << "\nYour change is Php " << paid - price << ".\n";
+        cout << " You bought " + product + ".";
+        cout << "\n Your change is Php " << paid - price << ".\n";
         reset_state = true;
         system("pause");
-        show_menu(0);
     }
 }
