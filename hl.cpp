@@ -4,8 +4,7 @@
 
 using namespace std;
 
-
-class game {
+class Game {
     private:
         int ans;
         int last;
@@ -39,6 +38,7 @@ class game {
 				cout << "Attempts: " << attempts << endl;
                 return 0;
             }
+            
             last = user_ans;
 
             string say = (ans > user_ans) ? "higher":"lower";
@@ -54,10 +54,10 @@ int main() {
     srand(time(0));
     
     system("title High-Low Game by JSCJ (C++)");
-    cout << "Note: The number is in the inclusive range of 0 to 99.\n";
+    cout << "I am thinking of a number between 0 and 99 (inclusive).\n";
 
-    game Game; 
-    Game.start();
+    Game game; 
+    game.start();
 
     return 0;
 }
