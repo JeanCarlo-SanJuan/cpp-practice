@@ -33,6 +33,8 @@ int denominations[] = {
     1,5,10, 20,50,100,200,500,1000
 };
 
+string invalid_msg = "Invalid denomination!\n Valid denominations are: \n 1, 5, 10, 20, 50, 100, 200, 500, and 1000\n\n";
+
 map<string, map<string, int>> menu = {
     {"Drinks", 
         {
@@ -50,15 +52,16 @@ map<string, map<string, int>> menu = {
     }
 };
 
+int menu_items = 3;
+bool reset_state = false;
+
 void show_option(int i, string text) {
     cout << "(" << i << ") " << text << endl;
 }
 
 int main() {
     system("title Vending Machine");
-
     show_menu(0);
-
     return 0;
 }
 
@@ -70,6 +73,8 @@ void show_menu(int state) {
 
     switch (state) {
         case 0: // Main menu
+            cout << "Main menu: \n";
+
             for(auto kv:menu) {
                 show_option(++i, kv.first);
             }
@@ -107,28 +112,35 @@ void prompt(int state) {
     
     int action;
 
-    cout << "Enter action: ";
+    cout << "\n> Enter action: ";
     cin >> action;
 
     switch (state) {
         case 0:
-            if (action != 3) {
+            if (action == 3) {
+                return;
+            }
+            else if (action > 0 && action <= menu_items) {
                 show_menu(action);
             }
 
             break;
         case 1: case 2:
-
-            if (action != 4) {
+            if (action == 4) {
+                show_menu(0);
+            } 
+            else if (action > 0 && action < menu_items + 1) {
                 handle_payment(state, action);
             }
             break;
-        default:
-            show_menu(0);
     }
+
+    show_menu((reset_state) ? 0:state);
 }
 
 void handle_payment(int category, int item_id) {
+    system("cls");
+
     int i = 0;
     int j = 0;
 
@@ -159,10 +171,11 @@ void handle_payment(int category, int item_id) {
 
     }
 
-    if (price > 0) {
-        cout << "Please pay the amount: " << price << endl;
-        while (paid < price) {
 
+    if (price > 0) {
+        while (paid < price) {
+            cout << "You have selected: " << product << endl;
+            cout << "Please pay the amount: " << price << endl;
             cout << "Balance left: " << price - paid << "\nInsert amount: ";
             cin >> current;
         
@@ -174,17 +187,21 @@ void handle_payment(int category, int item_id) {
                 }
             }
             
+            system("cls");
+
             if (valid) {
                 current = 0;
             } else {
-                cout << "Invalid denomination!\n";
+                cout << invalid_msg;
             }
 
             valid = false;
         }
 
-        cout << "You bought " << product;
-        cout << "\nYour change is Php " << paid - price;
-
+        cout << "You bought " + product + ".";
+        cout << "\nYour change is Php " << paid - price << ".\n";
+        reset_state = true;
+        system("pause");
+        show_menu(0);
     }
 }
