@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <map>
+using namespace std;
 
 /*  Vending Machine Project
 States:
@@ -23,7 +23,6 @@ in the payment state:
     Bills:
     20,50,100,200,500,1000
 */
-using namespace std;
 
 void show_menu(int state);
 void prompt(int state);
@@ -60,8 +59,9 @@ void show_option(int i, string text) {
 }
 
 int main() {
-    system("title Vending Machine");
+    system("title Vending Machine V1 by Jean Carlo San Juan");
     show_menu(0);
+
     return 0;
 }
 
