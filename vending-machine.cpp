@@ -65,7 +65,7 @@ int main() {
 }
 
 void show_menu(int state) {
-    system("cls");
+    system("clear || cls");
 
     int j = 0;
     int i = 0;
@@ -141,7 +141,7 @@ void prompt(int state) {
 }
 
 void handle_payment(int category, int item_id) {
-    system("cls");
+    system("clear || cls");
 
     int i = 0;
     int j = 0;
@@ -192,7 +192,7 @@ void handle_payment(int category, int item_id) {
                 }
             }
             
-            system("cls");
+            system("clear || cls");
 
             if (valid) {
                 current = 0;
