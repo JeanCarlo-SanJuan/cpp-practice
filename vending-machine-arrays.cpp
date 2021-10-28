@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <vector>
 using namespace std;
 
 /*  Vending Machine Project
@@ -34,21 +35,26 @@ int denominations[] = {
 
 string invalid_msg = "Invalid denomination!\n Valid denominations are: \n 1, 5, 10, 20, 50, 100, 200, 500, and 1000\n\n";
 
-map<string, map<string, int>> menu = {
-    {"Drinks", 
-        {
-            {"Juice", 5},
-            {"Soda", 10},
-            {"Coffee", 15}
-        }
-    },
-    {"Snacks", 
-        {
-            {"Biscuits", 20},
-            {"Chips", 35},
-            {"Chocolate", 70}
-        }
-    }
+string categories[] = {
+    "Snacks",
+    "Drinks",
+};
+
+string drinks[] = {
+    "Juice",
+    "Soda",
+    "Coffee"
+};
+
+string snacks[] = {
+    "Biscuits",
+    "Chips",
+    "Chocolate"
+};
+
+int prices[2][3] = {
+    {20,44,70},
+    {10,15,28},
 };
 
 int menu_items = 3;
@@ -75,31 +81,33 @@ void show_menu(int state) {
         case 0: // Main menu
             cout << "Main menu: \n";
 
-            for(auto kv:menu) {
-                show_option(++i, kv.first);
+            for(string cat:categories) {
+                show_option(++i, cat);
             }
 
             show_option(++i, "Quit");
-
             break;
-        case 1: case 2: // Drinks, Snacks, ...
-            for(auto kv:menu) {
-                i++;
+        case 1: case 2: // Drinks
 
-                //Enumerate the items in the subcategory
-                if (state == i) {
-                    cout << kv.first + ":\n";
+            cout << categories[state - 1] + ":\n" ;
 
-                    for(auto item: kv.second) {
-                        show_option(++j, item.first + " >> Php " + to_string(item.second));
+            switch(state) {
+                case 1:
+                    for (string snack:snacks) {
+                        show_option(++j, snack + " >> Php " + to_string(prices[state - 1][j]));
                     }
-
                     break;
-                }
-
+                case 2:
+                    for (string drink:drinks) {
+                        show_option(++j, drink + " >> Php " + to_string(prices[state - 1][j]));
+                    }
+                    break;
             }
-            show_option(++j, "Return");
 
+            show_option(++j, "Return");
+            break;
+
+        case 3:
             break;
     }
 
@@ -138,12 +146,13 @@ void prompt(int state) {
     show_menu((reset_state) ? 0:state);
 }
 
-void handle_payment(int category, int item_id) {
+void handle_payment(int cat_id, int item_id) {
     system("cls");
+
+    item_id -= 1; // Index starts at zero
 
     int i = 0;
     int j = 0;
-
     int price = 0;
     int paid = 0;
     int current = 0;
@@ -151,30 +160,20 @@ void handle_payment(int category, int item_id) {
 
     string product;
 
-    for(auto kv:menu) {
-        i++;
-
-        if (category == i) {
-            
-            // Finds the product and item
-            for(auto item: kv.second) {
-                j++;
-                if (j == item_id) {
-                    product = item.first;
-                    price = item.second;
-
-                    break;
-                }
-            }
-
+    switch (cat_id) {
+        case 1:
+            product = drinks[item_id];
             break;
-        }
-
+        case 2:
+            product = snacks[item_id];
+            break;
     }
+
+    price = prices[cat_id][item_id];
 
     if (price > 0) {
 
-        // Make user pay at arbitrary denominations until the desired price
+        // Make user pay at arbitrary denominations until desired price
         while (paid < price) {
             cout << " You have selected: " << product << endl;
             cout << " Please pay the amount: " << price << endl;

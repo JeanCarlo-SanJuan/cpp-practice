@@ -1,29 +1,13 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-vector<string> msgs = {
-    "Hello",
-    "Happy",
-    "World"
-};
-
 int main() {
 
-    string current;
-
-    for(;;) {
-        getline(cin, current);
-        if (current.length() > 0) 
-        {
-            msgs.push_back(current);
-        } else break;
-    }
-
-    for (string &msg: msgs) {
-        cout << msg << endl;
-    }
+    string strings[2][2] = {
+        {"this", "is"},
+        {"a", "2d array"}
+    };
 
     return 0;
 }
