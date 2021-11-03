@@ -19,7 +19,16 @@ bool again(string msg) {
     cout << endl << msg << " [Y/N]? ";
     cin >> action;
 
-    return action == 'Y' || action == 'y';
+    switch (action) {
+        case 'Y': case 'y':
+            return true;
+            break;
+        case 'N': case 'n':
+            return false;
+            break;
+    }
+
+    return again(msg);
 }
 
 void get_item_info() {
@@ -31,6 +40,7 @@ void get_item_info() {
         total_price += price * quantity;
     } else {
         cout << "Invalid price or quantity!\n";
+        get_item_info();
     }
 }
 
