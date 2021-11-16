@@ -1,4 +1,3 @@
-/*PROBLEM 2: Using user defined function and appropriate conditional and looping statements, create a program that will: */
  #include <iostream>
  #include <iomanip>
  using namespace std;
@@ -39,7 +38,7 @@ void get_item_info() {
     if (price > 0 && quantity >= 1) {
         total_price += price * quantity;
     } else {
-        cout << "Invalid price or quantity!\n";
+        cout << "\nInvalid price or quantity!\n\n";
         get_item_info();
     }
 }

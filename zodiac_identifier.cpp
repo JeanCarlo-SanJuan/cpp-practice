@@ -29,26 +29,25 @@ int main()
 {
     int m, d;
     char again;
-    do
-    {
-        cout << "Enter month:";
-        cin >> m;
-        cout << "Enter day:";
-        cin >> d;
 
-        if (m > 0 && m < 13) {
-            show_zodiac(m - 1, d);
-        } else {
-            cout << "Please type a valid Month\n";
-        }
+    cout << "Enter month:";
+    cin >> m;
+    cout << "Enter day:";
+    cin >> d;
 
-        cout << "Would you like to try again? (y/n):";
-        cin >> again;
+    if (m > 0 && m < 13) {
+        show_zodiac(m - 1, d);
+    } else {
+        cout << "Please type a valid Month\n";
     }
-    while (again == 'y'); //while loop
+
+    cout << "Would you like to try again? (y/n):";
+    cin >> again;
+
+    if (again == 'y') main();
+
     cout << "Press any key to continue." << endl;
     cin.ignore(1);
 
-    cout << "End of Program";
     return 0;
 }
